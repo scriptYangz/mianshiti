@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		什么叫事件委托呢？它还有一个名字叫事件代理。 JavaScript高级程序设计上讲：事件委托就是利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。
+
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li>
+			<li>9</li>
+			<li>10</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		//假如一个ul之中有10个li，我们要点击3，输出'hello world'，要怎么做？
+		var li = document.getElementsByTagName("li");
+		console.log(li)
+
+		for(var i = 0; i < li.length; i++) {
+			li[i].onclick = function() {
+				if(this.innerText=="3"){
+					console.log("hello world");
+				}
+			}
+		}
+		
+		
+		//假如有一百个li，这样的话就要遍历一百次，这样的话就会降低软件的性能
+		//事件委托：
+		var ul = document.getElementsByTagName("ul")[0];
+		ul.onclick = function(e){
+			if((e.target||e.srcElement).innerHTML == "3"){//ie浏览器用srcElement
+				console.log("hello world")
+			}
+			
+		}
+	</script>
+
+</html>

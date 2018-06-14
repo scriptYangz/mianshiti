@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//AMD是 依赖前置
+		
+		 //定义
+		define(['m'],function(m){
+			
+			function foo(){
+				m.dosomething()
+			}
+			
+			return {
+				foo:foo
+			};
+			
+		})
+		
+		//使用
+		require(['foo'],function(foo){
+			　alert(foo.dosomething());
+		})
+	</script>
+</html>

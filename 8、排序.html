@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+		//1.冒泡排序：冒泡排序就是把大数往数列的后面沉，自然小数就升起来了。首先需要个for循环来遍历数组，而后每两个数还需要比较交换，且数组最后的数不参与比较，因此再有个阶梯式for的循环。
+		//相邻的数依次比较，大的数往后沉（最后的i个已经是最大的，所以不用再比较）
+		var a = [3, 46, 55, 2, 5, 9, 8, 4, 33, 7];
+
+		function bubbleSort(arr) {
+			for(var i = 0; i < arr.length; i++) {
+				for(var j = 0; j < arr.length - i; j++) {
+					if(arr[j] < arr[j - 1]) {
+						var temp;
+						temp = arr[j];
+						arr[j] = arr[j - 1];
+						arr[j - 1] = temp; //下沉操作，即交换数组值  
+					}
+				}
+				document.write(arr + '----');
+				document.write('这是第' + (i + 1) + '次排序结果' + '</br>')
+			}
+		}
+
+		document.write("冒泡：<br>");
+		bubbleSort(a);
+
+		document.write('----------------------这是分割线------------------------------<br>');
+
+		//2.选择排序：先找一个基准数，如果后面的数比这个小，则交换，一轮下来找到便最小的数，以后以此类推，直至排序完毕。
+		var b = [3, 46, 55, 2, 5, 9, 8, 4, 33, 7];
+
+		function selectSort(arr) {
+			var min = 0;
+			for(var i = 0; i < arr.length; i++) {
+				min = i; //将数组排好序部分的后一个数作为基准数  
+				for(var j = i + 1; j < arr.length; j++) {
+					if(arr[min] > arr[j])
+						min = j; //找到正确的最小数的数组下标  
+				}
+				if(min != i) { //将上面找到的数组最小值同数组排好序部分的后一个数替换位置  
+					arr[i] = [arr[min], arr[min] = arr[i]][0]; //交换元素的另一种方式，等效于上面冒泡的temp方式  
+				}
+				document.write(arr + '----');
+				document.write('这是第' + (i + 1) + '次排序结果' + '</br>')
+			}
+		}
+		document.write("选择：<br>");
+		selectSort(b);
+
+		document.write('----------------------这是分割线------------------------------<br>');
+
+		//3.快速排序:利用递归的思想，取一个基准数，比它小的放在左边，比它大的放在右边，以此类推。
+		var c = [3, 46, 55, 2, 5, 9, 8, 4, 33, 7];
+
+		function quickSort(arr) {
+			//如果数组<=1,则直接返回
+			if(arr.length <= 1) {
+				return arr;
+			}
+			var pivotIndex = Math.floor(arr.length / 2);
+			//找基准，并把基准从原数组删除
+			var pivot = arr.splice(pivotIndex, 1)[0];
+			//定义左右数组
+			var left = [];
+			var right = [];
+
+			//比基准小的放在left，比基准大的放在right
+			for(var i = 0; i < arr.length; i++) {
+				if(arr[i] <= pivot) {
+					left.push(arr[i]);
+				} else {
+					right.push(arr[i]);
+				}
+			}
+			//递归
+			return quickSort(left).concat([pivot], quickSort(right));
+		}
+		document.write("快速：<br>");
+		document.write(quickSort(c) + "<br>");
+
+		document.write('----------------------这是分割线------------------------------<br>');
+
+		//4.插入排序：先把数组中第一个数进入结果数组中作为基准，然后依次选择数组中的数，如果比这个基准数大，则直接放到最后面，如果比这个数小，则依次向前比较，找到合适的地方后，挪出一个空位将其插入。
+		var a = [3, 46, 55, 2, 5, 9, 8, 4, 33, 7];
+
+		function insertSort(arr) {
+			var result = [];
+			result.push(arr[0]); //将第一个数最为基准  
+			document.write('第一次排序将数组首个数字放入result结果集' + '</br>');
+			for(var i = 1; i < arr.length; i++) {
+				if(arr[i] > result[result.length - 1]) { //如果后来的数比基准数大，直接放到最后面  
+					result[result.length] = arr[i]; //也可以写成result.push(arr[i]);  
+				}
+				for(var j = result.length; j > 0 && arr[i] < result[j - 1]; j--) { //逐个向前比较，找到比自己大的则交换位置  
+					result[j] = result[j - 1];
+					result[j - 1] = arr[i];
+				}
+				document.write(result + '----');
+				document.write('这是第' + (i + 1) + '次排序结果' + '</br>')
+			}
+		}
+		document.write("插入：<br>");
+		insertSort(a);
+	</script>
+
+</html>

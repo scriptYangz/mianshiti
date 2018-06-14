@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+
+		Array.prototype.uniqe = function() {
+			var arr1 = this.slice()
+			console.log(arr1)
+			//去重
+			for(var i = 0; i < arr1.length - 1; i++) {
+				for(var j = i + 1; j < arr1.length; j++) {
+
+					if(typeof(arr1[i]) == "object" && typeof(arr1[j]) == "object") {
+
+					}
+					if(arr1[i] == arr1[j]) {
+						arr1.splice(j, 1)
+						j--;
+					}
+
+				}
+			}
+
+		}
+
+		var arr2 = [0, 0, 0, 1, 0, 0, 1, 2, 0, 2, 3, 12, "字符", "字符", "zifu", "字符串", "zifu", {
+			num: 2
+		}, {
+			num: 2
+		}];
+//		arr2.uniqe()
+
+         var  s = new Set(arr2);
+         s=Array.from(s);
+         console.log(s)
+
+		
+		
+		
+		
+ /*       
+        var nArr=[
+  {
+    id:10001,
+    name:'张三'
+  },{
+    id:10002,
+    name:'李四'
+  },{
+    id:10001,
+    name:'张三'
+  },{
+    id:10003,
+    name:'王五'
+  },{
+    id:10004,
+    name:'赵六'
+  },{
+    id:10003,
+    name:'王五'
+  },{
+    id:10006,
+    name:'zuoqi'
+  }
+];
+
+   //方案一，利用新的数组进行循环遍历
+   var newArr=[];
+   function _objIsInArray(obj,arr){
+     let tmpStatus=false;
+     for(let j=0;j<arr.length;j++){
+       if(obj.id==arr[j].id){
+         return j;
+         break;
+       }else{
+         tmpStatus=false;
+       }
+     }
+     if(!tmpStatus){
+       return -1;
+     }
+   }
+   for(let i=0;i<nArr.length;i++){
+     if(_objIsInArray(nArr[i],newArr) ==-1){
+        newArr.push(nArr[i]);
+     }else{
+       console.log('对象已存在');
+     }
+   }
+   console.log(newArr);*/
+      
+	</script>
+
+</html>

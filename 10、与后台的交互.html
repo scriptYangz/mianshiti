@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="box"></div>
+		<button id="but">请求</button>
+	</body>
+	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			var user = "杨";
+
+			$("#but").click(function() {
+
+				$.post("http://127.0.0.1:8080",{username:user}, function(data) {
+					console.log(data)
+				});
+				
+			})
+
+		})
+	</script>
+	
+	<!--注意：
+		1.post方法和get方法不一样，具体取决于后台
+		
+		2.nodejs的post方法读取方式： 
+	      req.on('data', function (chunk) {
+             body += chunk;  //一定要使用+=，如果body=chunk，因为请求favicon.ico，body会等于{}
+             console.log("chunk:",chunk);
+           });
+        3.后台json的格式必须严格{"num":param.username},否则ajax的回调函数会不执行
+	-->
+
+</html>

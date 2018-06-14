@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+
+	<body>
+		<input type="text" name="" id="input" value="" />
+		<button id="but">计算</button>
+		<hr>
+		<span id="result"></span>
+	</body>
+	<script type="text/javascript">
+		var inp = document.getElementById("input");
+		var but = document.getElementById("but");
+		var res = document.getElementById("result");
+		var result = [];
+		var tempresult = []; //建立一个临时数组
+		var turnresult = [];
+
+		function trace() { //将数组转换为字符
+			var arr = [{
+					num: 2,
+					arr: ["a", "b", "c"]
+				},
+				{
+					num: 3,
+					arr: ["d", "e", "f"]
+				},
+				{
+					num: 4,
+					arr: ["g", "h", "i"]
+				},
+				{
+					num: 5,
+					arr: ["j", "k", "l"]
+				},
+				{
+					num: 6,
+					arr: ["m", "n", "o"]
+				},
+				{
+					num: 7,
+					arr: ["p", "q", "r", "s"]
+				},
+				{
+					num: 8,
+					arr: ["t", "u", "v"]
+				},
+				{
+					num: 9,
+					arr: ["w", "x", "y", "z"]
+				}
+			]
+
+			return arr;
+		}
+
+		function computed(str) { //计算最后结果
+
+			var f = str.charAt(0)
+
+			make(f)
+			if(str.length > 1) {
+				str = str.substring(1, str.length) //提取除第一个之外的字符串
+				computed(str)
+			}
+		}
+
+		function make(f) {
+			var tra = trace();
+			//拿到对应的字母数组
+			var letter = [];
+			for(var j = 0; j < tra.length; j++) {
+
+				if(f == tra[j].num) { //根据数字拿到字母
+					letter = tra[j].arr;
+				}
+
+			}
+
+			turnresult = result.slice()
+
+			//拿到字母之后，把它和之前的结果进行一一合并
+			for(var l = 0; l < letter.length; l++) { //遍历每个键的数组
+
+				if(result.length < 1) { //如果是第一组数字，则令该数组等于结果
+					result = letter
+					letter = []
+					break;
+				} else { //如果不是第一组字母，则把它们和之前的结果进行组合
+
+					tempresult = turnresult.slice()
+					for(var k = 0; k < tempresult.length; k++) {
+						var str1 = tempresult[k].concat(letter[l]) //字符串合并
+						//删除result对应的值，并且添加这个
+						tempresult.splice(k, 1, str1)
+
+					}
+
+					console.log('-------------')
+
+					result = result.concat(tempresult) //连接数组
+					tempresult = []
+
+				}
+
+				//							result.push(str1)
+			}
+
+			//删除turnresult的内容
+			for(var m = 0; m < turnresult.length; m++) {
+				result.splice(0, 1)
+			}
+			console.log(result)
+
+		}
+
+		but.onclick = function() {
+			result = []
+			var str = inp.value
+			computed(str)
+			console.log(result)
+			res.innerHTML = result;
+		}
+	</script>
+
+</html>

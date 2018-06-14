@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			html,
+			body {
+				height: 200%;
+			}
+			
+			#district_menu {
+				height: 100px;
+				background-color: red;
+				margin-top: 200px;
+			}
+			.but1{
+				margin-top: 300px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="district_menu">
+			祺智通信
+		</div>
+		
+		
+		<button class="but1" ></button>
+	</body>
+	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(window).scroll(function() {
+				//获取垂直滚动的距离
+				var scrollTop = $(document).scrollTop();
+				if(scrollTop >= 200) {
+					$("#district_menu").css({
+						"position": "fixed",
+						"top": "0",
+						"marginTop": "0",
+						"width": "100%"
+					});
+				} else {
+					$("#district_menu").css({
+						"backgroundColor": "red",
+						"height": "100px",
+						"marginTop": "200px",
+						"position": "relative"
+					});
+				}
+			});
+		});
+	</script>
+
+</html>

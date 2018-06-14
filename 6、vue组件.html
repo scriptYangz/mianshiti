@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.bc1 {
+				display: block;
+				width: 100px;
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="app">
+			<button-counter class="bc1"></button-counter>
+			<button-counter class="bc1"></button-counter>
+			<button-counter class="bc1"></button-counter>
+			<write title="面试"></write>
+		</div>
+	</body>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		Vue.component('button-counter', {
+			data: function() { //data必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝
+				return {
+					count: 0
+				}
+			},
+			template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+		})
+
+		//通过prop向子组件传递数据
+		Vue.component('write', {
+			props: ["title"], //自定义属性
+			data: function() { //data必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝
+				return {
+					count: 0
+				}
+			},
+			template: '<input v-bind:value="title" />'
+		})
+
+		new Vue({
+			el: '#app'
+		})
+	</script>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+			1.    HTML+CSS+Javaｓｃｒｉｐｔ实现以下功能：当用户点击页面里所有a标签时，
+			如果其链接里包含数字，则点击该链接时提示用户“该链接存在风险，是否继续点击？”
+			用户只有点击确认才打开该链接
+		-->
+		<a href="14、iframe.html">123</a>
+		<a href="http://www.baidu.com">http://www.baidu.com</a>
+		<a href="http://www.baidu.com">百度一下</a>
+		<a href="http://www.hao123.com">http://www.hao123.com</a>
+
+	</body>
+	<script type="text/javascript">
+		var body = document.getElementsByTagName("body")[0];
+
+		body.onclick = function(e) {
+			check(e.target)
+			e.preventDefault()
+		}
+
+		function check(e) {
+			var regexp = /\d/;
+			if(e.innerText.match(regexp)) {
+				var r = confirm("该链接存在风险，是否继续点击？")
+				if(r == true) {
+					window.open(e.href)
+				}
+			} else {
+				window.open(e.href)
+			}
+		}
+	</script>
+
+</html>

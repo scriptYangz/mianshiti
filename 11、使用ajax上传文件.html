@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>AJAX上传文件到服务器</title>
+	</head>
+
+	<body>
+		<!--方法一：form表单上传-->
+		<!--<form enctype="multipart/form-data" action="http://127.0.0.1:8080" method="post">
+			<input type="file" id="fu_UploadFile" name="fu_UploadFile" value="" title="上传附件">
+		    <input type="button" value="上传" onclick="upload()" />
+			<input type="submit" value=""/>
+		</form>-->
+
+		<input type="file" id="fu_UploadFile" name="fu_UploadFile" value="" title="上传附件">
+		<input type="button" value="上传" id="upload" />
+
+	</body>
+
+	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var BASEURL = "http://127.0.0.1:8080";
+		//方法二：无刷新上传：ajaxfileupload（需要解决跨域问题）
+		/*function upload() {
+			var path = document.getElementById("fu_UploadFile").value;
+			if($.trim(path) == "") {
+				alert("请选择要上传的文件");
+				return;
+			}
+			console.log("test");
+
+			var result_msg = "";
+			
+			$.ajaxFileUpload({
+				url: 'http://127.0.0.1:8080', //这里是服务器处理的代码
+				type: 'post',
+				secureuri: false, //一般设置为false
+				fileElementId: 'fu_UploadFile', // 上传文件的id、name属性名
+				dataType: 'json', //返回值类型，一般设置为json、application/json
+				crossDomain: true,
+				data: {}, //传递参数到服务器
+				contentType: false,    //这些参数要设置为false 
+				processData: false,  //很重要，告诉jquery不要对form进行处理
+				success: function(data, status) {
+					if(status) {
+						alert(status);
+					} 
+				},
+				error: function(data, status, e) {
+					alert(status);
+				}
+			});
+		}*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+     //方法三：formData()
+		$(function() {
+
+			$("#upload").click(function() {
+				var fileobj = document.getElementById("fu_UploadFile").files[0];
+				upload(fileobj);
+			})
+
+			function upload(fileobj,fileobj2) {
+				var filedata = new FormData();
+				filedata.append("action", "UploadVMKImagePath");
+				filedata.append("file", fileobj);
+				var data = filedata;
+				$.ajax({
+					url: BASEURL,
+					async: true,
+					data: data,
+					type: "POST",
+					dataType: "json",
+					cache: false, //上传文件无需缓存
+					processData: false, //用于对data参数进行序列化处理 这里必须false
+					contentType: false, //必须
+					success: function(result) {
+						alert("上传完成!");
+					},
+
+				})
+			}
+		})
+	</script>
+
+</html>

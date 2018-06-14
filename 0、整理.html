@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		1、一个页面在浏览器上的生命周期
+(1)请求页：当浏览器向服务器发出请求时，服务器先是解析HTTP报文，查看所请求的页面是否需要分析与编译，或是可以在不运行页面的情况下输出页面缓存来进行响应(如果不太懂页面缓存与HTTP报文的话下面的补充知识中有包含)
+
+(2)、开始：用于初始化页面类的属性，用于处理用户请求还有要回发数据库的响应的对象，Request与Response就在这个过程中设置，还根据是回发请求来设置IsPostBack属性）
+
+(3)、页面初始化：对应事件是Page_PreInit事件，页面初始化期间可以使用控件，并将设置每一个控件是UniqueID属性，此外，任何主题都将应用于页。如果当前的请求是回发请求（也就不是第一次请求）那么这个时候我们是没有办法获取控件的属性的，因为它还没有从ViewState中还原，用户控件和母版页是没有这个事件的，这个事件只有是页面级的事件中有。
+
+(4)、控件加载：对应的是Page_Init,在这个事件中，读取或者初始化控件的属性，如果是回发请求的话，则将使用从视图状态和控件状态恢得多的信息加载控件属性
+
+(5)、验证：调用所有验证程序控件的Validate()方法，将设置各个验证程序控件和页的IsValid属性
+
+(6)：页面加载：在Page_Load事件中，可以读取和更新控件属性
+
+(7)：回发事件处理（我们经常使用的是两个事件）
+
+(8)：呈现：在这个步骤中，ASP.NET会处理当前的视图状态，并将其序列化保存到页。接着调用每一个控件，将其呈现通过Respose.OutputStream输出
+
+(9)：卸载：在页面完全呈现并准备丢弃时，调用卸载Page_Unload()事件，包括关闭打开了的文件和数据库连接，完成日志记录或者其他的事务
+		
+		
+		预初始化(OnPreInit) 
+                  初始化(OnInit) 
+                  完成初始化(OnInitComplete) 
+                  载入ViewState(LoadViewState) 
+                  处理回送数据(IPostBackDataHandler) 
+        Page_OnPreLoad—》Page_OnLoad 
+                 回发更改通知(RaisePostDataChangedEvent) 
+                 处理回发事件(RaisePostBackEvent) 
+       Page_OnLoadComplete 
+                预呈现(OnPreRender) 
+                完成预呈现(OnPreRenderComplete) 
+               保存ControlState(SaveControlState) 
+               保存ViewState(SaveViewState) 
+                呈现(Render)
+                
+                
+               客户端请求页面  
+                预初始化
+                初始化
+                完成初始化
+                载入viewState
+                处理回送数据
+                页面预加载
+                页面加载
+                回发更改通知
+                处理回发事件
+                预呈现
+                完成预呈现
+                保存ControlState
+                保存viewState
+                呈现
+		
+		
+		2、请简单描述vue的生命周期
+		创建前：beforeCreate
+		创建后：create
+		挂载前（el）：beforeMount
+		挂载后：mounted
+		更新前：beforeUpdate
+		更新后：updated
+		销毁前：beforeDistory
+		销毁后：distoryed
+		
+		
+beforecreate : 举个栗子：可以在这加个loading事件 
+created ：在这结束loading，还做一些初始化，实现函数自执行 
+mounted ： 在这发起后端请求，拿回数据，配合路由钩子做一些事情
+beforeDestroy： 你确认删除XX吗？ destroyed ：当前组件已被删除，清空相关内容
+		
+		3、GET和POST的最大长度分别是多少，为什么？
+		GET：约1024字节   （字节：byte）
+		POST：post 理论上讲是没有大小限制的，HTTP协议规范也没有进行大小限制，但实际上post所能传递的数据量大小取决于服务器的设置和内存大小。
+		
+		4、vue的路由有几种模式？请分别描述
+		两种，hash和history
+		hash：即地址栏URL中的#符号
+		history：利用了HTML5 History Interface 中新增的pushState() 和replaceState() 方法          (没有#分割，看起来比较好看)
+		
+		
+		5、vue的优缺点？
+		MVVM框架、数据驱动、组件化、轻量、简洁、高效、快速、模块友好
+		   优点： 1. 简单：官方文档很清晰，比 Angular 简单易学。
+
+　　　　  2. 快速：异步批处理方式更新 DOM。
+
+　　　　  3. 组合：用解耦的、可复用的组件组合你的应用程序。
+
+　　　　  4. 紧凑：~18kb min+gzip，且无依赖。
+
+　　　　  5. 强大：表达式 & 无需声明依赖的可推导属性 (computed properties)。
+
+　　　　  6. 对模块友好：可以通过 NPM、Bower 或 Duo 安装，不强迫你所有的代码都遵循 Angular 的各种规定，使用场景更加灵活。
+
+         
+
+　                    缺点：  1. 新生儿：Vue.js是一个新的项目，没有angular那么成熟。
+
+　　　　　2. 影响度不是很大：google了一下，有关于Vue.js多样性或者说丰富性少于其他一些有名的库。
+
+　　　　　3. 不支持IE8：
+
+
+
+        6、嵌入式框架，每个框架里面可以加载一个网页。
+        比如一个网页划分了几个栏目，都要在主页显示，每个栏目占用一个框架。
+        也就是每个栏目做成了一个小网页。这样在打开主页时各栏目可以同时分别
+        加载。假如哪个栏目有错也不会影响其他栏目，还可以多人一块开发，每人负责一块，互不影响。IFrame，又称为“帧”，“嵌入式框架”，多用于B/S结构的系统开发，可以多级嵌套（一个IFrame下还有IFrame）。
+        
+        7、<div style=”padding-bottom:50%”></div>中的50%应该如何计算？
+        	 父级元素宽度的50%
+        	 
+        8、p:nth-child(2)代表什么？
+             代表p元素的父元素的第二个子元素
+             
+             
+        9、flex-grow是？
+        flex-grow用于设置或检索弹性盒子的扩展比率
+        
+        10、哪些数组方法会更改现有数组
+              Array.prototype.splice
+              Array.prototype.sort
+              
+        11、for(var i = 0; i <= 3; i++) {
+
+			setTimeout(function() {
+				console.log(i);
+			}, 0);
+
+		}
+		的运行结果是什么?
+		4444
+		
+		12/HTTP状态码表示暂时性转移的是:302
+		
+		13/渐进增强和优雅降级之间的不同
+		优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会检查以确认它们是否能正常工作。由于IE独特的盒模型布局问题，针对不同版本的IE的hack实践过优雅降级了,为那些无法支持功能的浏览器增加候选方案，使之在旧式浏览器上以某种形式降级体验却不至于完全失效.
+
+渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能,向页面增加无害于基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。
+	</body>
+</html>
