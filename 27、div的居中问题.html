@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		div绝对居中的两种方式（绝对定位）
+		父容器设置 position: relative;
+		（1）
+.main{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+                    （2）
+.main{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+
+（3）
+.center {  
+   display: -webkit-flex;  
+   -webkit-justify-content: center;  
+   -webkit-align-items: center;  
+  }  
+  
+  (4)
+  .center{
+  	margin:(父级高度的一半减自身高度的一半) auto;
+  }
+	</body>
+</html>

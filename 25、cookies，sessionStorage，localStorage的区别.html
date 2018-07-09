@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		1.cookie分为会话cookie和永久cookie：
+		（1）不设置过期时间，则表示这个cookie生命周期为浏览器会话期间，只要关闭浏览器窗口，cookie就消失了
+		（2）设置了过期时间，浏览器就会把cookie保存到硬盘上，关闭后再次打开浏览器，这些cookie依然有效直到超过设定的过期时间
+		2.webStorage 分为sessionStorage和localStorage，其中sessionStorage是会话存储，localStorage是本地存储
+		3.session是服务器的存储，而不是sessionStorage
+		4.cookie和webStorage都是浏览器端的存储
+		5.sessionStorage和localStorage虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大 ，cookie保存数据不大于4k
+		6.作用域不同，sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；localstorage在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的 
+		7.cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递，而sessionStorage和localStorage不会自动把数据发送给服务器，仅在本地保存。cookie数据还有路径（path）的概念，可以限制cookie只属于某个路径下 
+
+	</body>
+	<script type="text/javascript">
+//cookie的使用
+		function setCookie(c_name, value, expiredays) {
+			var exdate = new Date()
+			exdate.setDate(exdate.getDate() + expiredays)
+			document.cookie = c_name + "=" + escape(value) +
+				((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+		}
+
+		function getCookie(c_name) {
+			if(document.cookie.length > 0) {
+				c_start = document.cookie.indexOf(c_name + "=")
+				if(c_start != -1) {
+					c_start = c_start + c_name.length + 1
+					c_end = document.cookie.indexOf(";", c_start)
+					if(c_end == -1) c_end = document.cookie.length
+					return unescape(document.cookie.substring(c_start, c_end))
+				}
+			}
+			return ""
+		}
+		
+		console.log(getCookie("name"))
+		setCookie("name","cookie")
+			
+//		localStorage的使用
+        localStorage.setItem("local","localStorage")
+        localStorage.getItem("local")
+        localStorage.removeItem("local");
+        localStorage.clear();
+        
+//      sessionStorage的使用
+        sessionStorage.setItem("session","sessionStorage")
+        sessionStorage.getItem("session")
+        sessionStorage.removeItem("session");
+        sessionStorage.clear();
+		
+	</script>
+
+</html>

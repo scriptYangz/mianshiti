@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		常见的浏览器内核可以分四种：Trident、Gecko、Blink、Webkit
+IE浏览器	Trident内核，也成为IE内核
+Chrome浏览器	Webkit内核，现在是Blink内核
+Firefox浏览器	Gecko内核，俗称Firefox内核
+Safari浏览器	Webkit内核
+Opera浏览器	最初是自己的Presto内核，后来加入谷歌大军，从Webkit又到了Blink内核；
+360浏览器	IE+Chrome双内核
+猎豹浏览器	IE+Chrome双内核
+百度浏览器	IE内核
+QQ浏览器	Trident（兼容模式）+Webkit（高速模式）
+
+常见的兼容性问题：
+1、不同浏览器的标签默认的外补丁( margin )和内补丁(padding)不同
+解决方案： css 里增加通配符 * { margin: 0; padding: 0; }
+
+2、IE6双边距问题；在 IE6中设置了float , 同时又设置margin , 就会出现边距问题
+解决方案：设置display:inline;
+
+3、当标签的高度设置小于10px，在IE6、IE7中会超出自己设置的高度
+解决方案：超出高度的标签设置overflow:hidden,或者设置line-height的值小于你的设置高度
+
+4、图片默认有间距
+解决方案：使用float 为img 布局
+
+5、IE9以下浏览器不能使用opacity
+解决方案：
+opacity: 0.5;filter: alpha(opacity = 50);filter: progid:DXImageTransform.Microsoft.Alpha(style = 0, opacity = 50);
+
+6、边距重叠问题；当相邻两个元素都设置了margin 边距时，margin 将取最大值，舍弃最小值；
+解决方案：为了不让边重叠，可以给子元素增加一个父级元素，并设置父级元素为overflow:hidden；
+
+7、cursor:hand 显示手型在safari 上不支持
+解决方案：统一使用 cursor:pointer
+
+8、两个块级元素，父元素设置了overflow:auto；子元素设置了position:relative ;且高度大于父元素，在IE6、IE7会被隐藏而不是溢出；
+解决方案：父级元素设置position:relative
+
+
+
+     1、html部分
+
+
+       a、最突出也是最容易想到的就是高版本的浏览器用了低版本的浏览器无法识别的元素，从而导致不能解析。这点主要体现在html5的新标签上
+
+
+       解决办法是：htmlshim框架可以让低于IE9的浏览器支持html5
+
+
+       b、img的alt属性，在图片不存在的情况下，各浏览器的解析不一致
+
+
+       在chrome下显示的是一张破损的图片，在ff下显示的是alt的文字，而在IE中显示的是破损的图片加文字
+
+
+       c、ul标签内外边距问题
+
+
+       ul标签在IE6\IE7中，有个默认的外边距，但是在IE8以上及其他浏览器中有个默认的内边距
+
+
+       2、css部分：
+
+
+       a、css的hack问题：主要针对IE的不同版本，不同的浏览器的写法不同
+
+
+       IE的条件注释hack：
+
+
+       <!--[if IE 6]>此处内容只有IE6.0可见<![endif]-->   
+
+
+       <!--[if IE 7]>此处内容只有IE7.0可见<![endif]-->
+
+
+       b、IE6双边距问题：IE6在浮动后，又有横向的margin，此时，该元素的外边距是其值的2倍
+
+
+       解决办法：display:block;
+
+
+       c、IE6下图片的下方有空隙
+
+
+       解决方法：给img设置display:block;
+
+
+       d、IE6下两个float之间会有个3px的bug
+
+
+       解决办法：给右边的元素也设置float:left;
+
+
+       e、IE6下没有min-width的概念，其默认的width就是min-width
+
+
+       f、IE6下在使用margin:0 auto;无法使其居中
+
+
+       解决办法：为其父容器设置text-align:center;
+
+
+       g、 被点击过后的超链接不再具有hover和active属性
+
+
+       解决办法:按lvha的顺序书写css样式
+
+
+       h、在使用绝对定位或者相对定位后，IE中设置z-index失效，原因是因为其元素依赖于父元素的z-index，但是父元素默认为0， 子高父低，所以不会改变显示的顺序
+
+
+       i、IE6下无法设置1px的行高，原因是由其默认行高引起的
+
+
+       解决办法：为期设置overflow:hidden;或者line-height:1px;
+
+
+       3、js部分
+
+
+       a、标准的事件绑定方法函数为addEventListener，但IE下是attachEvent；
+
+
+       b、事件的捕获方式不一致，标准浏览器是由外至内，而IE是由内到外，但是最后的结果是将IE的标准定为标准
+
+
+       c、我们常说的事件处理时的event属性，在标准浏览器其是传入的，IE下由window.event获取的。并且获取目标元素的方法也不同，标准浏览器是event.target，而IE下是event.srcElement
+
+
+       d、在低版本的IE中获取的日期处理函数的值不是与1900的差值，但是在高版本的IE中和标准浏览器保持了一致，获取的值也是与1900的差值。
+   
+       比如：var year= new Date().getYear();
+
+
+       e、ajax的实现方式不同，这个我所理解的是获取XMLHttpRequest的不同，IE下是activeXObject
+
+
+       f、IE中不能操作tr的innerHtml
+
+
+       g、获得DOM节点的父节点、子节点的方式不同
+
+
+       其他浏览器：parentNode  parentNode.childNodes
+
+
+       IE：parentElement parentElement.children
+       
+       
+    
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		1、在一般函数中
+		2、在对象方法中
+		3、在构造函数中
+		4、apply方法调用
+		
+		
+		
+		
+	</body>
+	<script type="text/javascript">
+//		1、一般函数中一般指的是全局对象windows
+	function test(){
+　　　　            console.log(this)
+　        　}
+	test();//window对象
+	
+//2、在对象方法中一般指向上级对象
+	var o ={
+		 name:"this",
+		 test2:function(){
+		 	console.log(this)
+		 }
+	}
+	o.test2()//o对象
+	
+//3、在构造函数中，一般指new出来的实例对象
+    function test3(str){
+    	this.name="简"+str
+    	console.log(this)
+    }
+    var jian = new test3("单")
+    console.log(jian.name)
+    console.log(jian)//jian这个实例对象
+    
+//4、apply方法作用是改变函数的调用对象
+    var x = 0;
+　　function test4(){
+　　　　console.log(this.x);
+　　}
+　　var o={};
+　　o.x = 1;
+　　o.m = test4;
+　　o.m.apply(); //0     。。apply()的参数为空时，默认调用全局对象。因此，这时的运行结果为0，证明this指的是全局对象。如果把最后一行代码修改为
+　　o.m.apply(o); //1    。。此时指向o对象
+    
+ 
+//return的坑
+//(1)
+      function fn1(){  
+					    this.user = '追梦子';  
+					    return {};  
+					}
+			var a = new fn1();  
+			console.log(a.user); //undefined
+			
+//(2)
+     function fn2(){
+     	                this.user = '追梦子';  
+					    return function(){}; 
+     }
+            var b = new fn2();  
+			console.log(b.user); //undefined
+	
+//(3)
+            function fn3(){  
+					    this.user = '追梦子';  
+					    return {name:"name"};  
+					}
+			var c = new fn3();  
+			console.log(c.user); //undefined
+    
+    
+//(4)
+            function fn4(){
+					    this.user = '追梦子';  
+					    return 1;  
+					}
+			var d = new fn4();  
+			console.log(d.user); //追梦子
+			
+//(5)
+           function fn5(){
+					    this.user = '追梦子';  
+					    return undefined;  
+					}
+			var e = new fn5();  
+			console.log(e.user); //追梦子
+			
+//(6)      
+           function fn6(){
+           	            this.user = '追梦子';  
+					    return null; 
+           }
+           var f = new fn6();  
+			console.log(f.user); //追梦子
+			
+//（7）
+			function fn7(){
+           	            this.user = '追梦子';  
+					    return false; 
+           }
+           var g = new fn7();  
+		   console.log(g.user); //追梦子
+		   
+//(8)
+            function fn8(){
+           	            this.user = '追梦子';  
+					    return true; 
+           }
+           var h = new fn8();  
+		   console.log(h.user); //追梦子
+		   
+		//return:new一个实例出来的时候，如果return一个对象，那么this指向返回的对象，其他情况则指向函数的实例
+		   
+      //注意：（1）在严格版中的默认的this不再是window，而是undefined。
+    
+	</script>
+</html>

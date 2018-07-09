@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		箭头函数与function定义函数有什么区别？
+		（1）简洁
+		（2）this指向固定
+		///function定义函数中的this指向
+		
+				function aaa(){
+				    console.log(this)
+				}
+				var obj={
+				    aaa:aaa
+				};
+				aaa();//此时输出window对象
+				obj.aaa();//此时输出obj对象
+				
+				
+				///箭头函数中的this指向
+				var aaa=()=>{
+				    console.log(this)
+				};
+				var obj={
+				    aaa:aaa
+				}
+				aaa();//此时指向window
+				obj.aaa();//此时指向window
+		（3）不能被new
+		（4）变量提升
+		///function定义函数时候的位置
+		
+				aaa();//aaa
+				function aaa(){
+				    console.log('aaa')
+				}
+				
+				
+				///箭头函数定义的位置
+				var aaa=()=>{
+				    console.log('aaa')
+				};
+				aaa();//aaa
+				bbb();///报错bbb is not a function
+				var bbb=()=>{
+				    console.log('bbb')
+				}
+	</body>
+</html>
